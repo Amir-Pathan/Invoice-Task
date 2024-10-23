@@ -1,0 +1,13 @@
+
+
+.buttonPlus{
+    color: #733dd9;
+    border: 1px solid #733dd9;
+    background-color: transparent;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.pointer{
+    cursor: pointer;
+}

@@ -1,0 +1,78 @@
+.backgroundWhite{
+    background-color: white;
+}
+.field{
+    border-top: 0px solid white;
+    border-right: 0px solid white;
+    border-left: 0px solid white;
+    border-bottom: 1px solid grey;
+    border-radius: 0px;
+}
+
+.field:focus{
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid #733dd9;
+    background-color: transparent;
+}
+
+.borderDotted{
+    border: 1px solid gray;
+    border-style: dotted;
+    cursor: pointer;
+}
+
+.field-box{
+    border: 1px solid grey;
+}
+.field-box:focus{
+    box-shadow: none;
+    border: 1px solid #733dd9;
+    background-color: transparent;
+}
+.bussinessLogo{
+    border: 2px solid black;
+    padding: 15px 15px 15px 15px;
+    margin-top: 40px;
+   border-style: dotted;
+   border-radius: 4px;
+   background-color: #e5ecf7;
+}
+.backgound{
+    background-color: #e5ecf7 !important;
+}
+.smallFont{
+    font-size: 10px;
+}
+.transparentBg{
+    background-color: transparent;
+}
+.dropdownBtn{
+    background-color: transparent;
+}
+.countrtdrop{
+    border: none;
+    border-bottom: 1px solid #733dd9;
+    margin-top: 4px;
+}
+.flag{
+    width: 15px;
+    height: 15px;
+    padding-bottom: -20px;
+}
+.color{
+    color: #733dd9;
+}
+.gst{
+    border: 1px solid grey;
+    border-radius: 3px;
+    padding: 5px;
+    cursor: pointer;
+}
+.bgColr{
+    background-color: #733dd9;
+    padding: 12px;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
