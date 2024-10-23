@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import AddButton from "../component/addButton"
 import { IoIosClose } from "react-icons/io";
 
@@ -7,18 +7,31 @@ import { IoIosClose } from "react-icons/io";
 const options = ['India','Australia','America','South Africa ','Pakistan','Bangledash','Srilanka']
 
 
+
 function InvoiceForm(){
 
     const [upadte,setUpdate] = useState(0)
 
+    const  ref = useRef()
+
     const initialState={
         invoiceNo:"",
+        imgSrc:'',
         invoiceDate:'',
         showDueDate:false,
         dueDate:'',
         customField:[],
         billToCustomField:[],
         billByCustomField:[],
+        items:[{
+          itemName:'',
+          hsn:'',
+          quantity:'',
+          rate:'',
+          amount:'',
+          total:'',
+          gst:''
+        }],
         dueDate:'',
         billedBy:{
             country:'',
@@ -96,8 +109,16 @@ function InvoiceForm(){
 
     }
 
+    const handleUpload=()=>ref.current.click()
+
     return(
-        <div className="container mt-5 backgroundWhite rounded " style={{width:'70%'}} >
+      <>
+      <input type="file" style={{display:'none'}}
+      ref={ref}
+      onChange={(e)=>handleChange('','imgSrc',e.target.files[0])}
+      accept="image/*"
+      />
+        <div className="container mt-5 backgroundWhite rounded mb-4 " style={{width:'70%'}} >
             <div className="p-4 ">
                <div>
                 <h1 className="fw-bold text-center ">Invoice</h1>
@@ -183,8 +204,16 @@ function InvoiceForm(){
                                 />
                              </div>
                         </div>
-                        <div >
+                        <div onClick={handleUpload}>
                             <div className="bussinessLogo">
+                              {
+                                state.imgSrc!=""&&
+                                <div className="d-flex justify-content-center">
+                                <img src={URL.createObjectURL(state.imgSrc)} alt=""
+                                className="img"
+                                />
+                                </div>
+                              }
                             <h6 className="text-center">Add Bussiness Logo</h6>
                             <div className="text-center">
                                 Resolution Upto 1080x1080px,<br />
@@ -415,9 +444,6 @@ function InvoiceForm(){
                              </select>
                           
                         </div>
-                        <div className="col-md-4 text-center gst">
-                            <span className="color">%</span> Edit Column/Formulas
-                        </div>
                     </div>
                     <div className="row mt-4 bgColr">
                        <div className='col-md-3'>Item</div>
@@ -425,64 +451,105 @@ function InvoiceForm(){
                        <div className='col-md-1'>GST</div>
                        <div className='col-md-1'>Quantity</div>
                        <div className='col-md-1'>Rate</div>
-                       <div className='col-md-1'>Amount</div>
-                       <div className='col-md-1'>CGST</div>
-                       <div className='col-md-1'>SGST   </div>
-                       <div className='col-md-1'>Total</div>
+                       <div className='col-md-2'>Amount</div>
+                       <div className='col-md-2'>Total</div>
                     </div>
                     {
-                    <div className="backgound mb-2">
-                    <div className="row p-4 ">
-                    <div className='col-md-3'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                    </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-
-                    </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                    </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-
-                    </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                      </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                      </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                      </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
+                      state.items.map((item,index)=>{
+                        return <div className="backgound mb-2" key={index}>
+                        <div className="row p-4 ">
+                        <div className='col-md-3'>
+                          <input type="text" className="form-control field transparentBg mt-1"
+                          value={item.itemName}
+                          onChange={(e)=>{
+                            handleCustomField(index,'items','itemName',e.target.value)
+                          }}
+                          /> 
+                        </div>
+                        <div className='col-md-1'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          value={item.hsn}
+                          onChange={(e)=>{
+                            handleCustomField(index,'items','hsn',e.target.value)
+                          }}
+                          /> 
+    
+                        </div>
+                        <div className='col-md-1'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          value={item.gst}
+                          onChange={(e)=>{
+                            handleCustomField(index,'items','gst',e.target.value)
+                          }}
+                          /> 
+                        </div>
+                        <div className='col-md-1'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          value={item.quantity}
+                          onChange={(e)=>{
+                            handleCustomField(index,'items','quantity',e.target.value)
+                          }}
+                          /> 
+    
+                        </div>
+                        <div className='col-md-1'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          value={item.rate}
+                          onChange={(e)=>{
+                            handleCustomField(index,'items','rate',e.target.value)
+                          }}
+                          /> 
+                          </div>
+                        <div className='col-md-2'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          disabled
+                          value={Number(item.quantity)*Number(item.rate)}
+                          
+                          /> 
+                          </div>
+                        <div className='col-md-2'>
+                          <input type="number" className="form-control field transparentBg mt-1"
+                          disabled
+                          value={(Number(item.quantity)*Number(item.rate))+Number(item.gst)+Number(item.hsn)}
+                          /> 
+                        </div>
+                        <div className="col-md-1">
+                           <IoIosClose size={25}
+                           onClick={()=>{
+                            handleCustomRemoveField(index,'items')
+                           }}
+                           />
+                        </div>
                      </div>
-                    <div className='col-md-1'>
-                      <input type="text" className="form-control field transparentBg mt-1"/> 
-                    </div>
-                    <div className="col-md-1">
-                       <IoIosClose size={25}/>
-                    </div>
-                 </div>
-                 <div className="row p-2">
-                    <div className="col-md-3">
-                       <AddButton title={'Add Description'} hadleFunc={()=>{}}/>
-                    </div>
-                    <div className="col-md-3">
-                       <AddButton title={'Add Thumbnail'} hadleFunc={()=>{}}/>
-                    </div>
-                 </div>
-                 </div>
+                     </div>
+                      })
+                    
                     }
-                    <div className="text-center borderDotted p-2">
+                    <div className="text-center borderDotted p-2" 
+                    onClick={()=>{
+
+                      handleChange('','items',[...state.items,{
+                        itemName:'',
+                        hsn:'',
+                        quantity:'',
+                        rate:'',
+                        amount:'',
+                        total:'',
+                        gst:''
+                      }])
+
+                    }}
+                    >
                         <span>+</span> Add New Line
+                    </div>
+                    <div className="d-flex justify-content-center mt-4" >
+                      <button className="btn btn-danger" type="submit">Save & Continue</button>
                     </div>
                 </form>
                </div>
             </div>
         </div>
+        </>
     )
 
 
