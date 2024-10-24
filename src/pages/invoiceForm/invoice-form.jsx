@@ -204,21 +204,23 @@ function InvoiceForm(){
                                 />
                              </div>
                         </div>
-                        <div onClick={handleUpload}>
+                        <div>
                             <div className="bussinessLogo">
                               {
-                                state.imgSrc!=""&&
+                                state.imgSrc!=""?
                                 <div className="d-flex justify-content-center">
                                 <img src={URL.createObjectURL(state.imgSrc)} alt=""
                                 className="img"
                                 />
-                                </div>
-                              }
-                            <h6 className="text-center">Add Bussiness Logo</h6>
+                                </div>:<div  onClick={handleUpload}>
+                                <h6 className="text-center">Add Bussiness Logo</h6>
                             <div className="text-center">
                                 Resolution Upto 1080x1080px,<br />
                                 PNG or JPG file
                             </div>
+                                </div>
+                              }
+                            
                             </div>
                         </div>
                     </div>
